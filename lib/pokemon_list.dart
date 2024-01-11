@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex/pokemon_detail.dart';
 import 'pokemon.dart';
 
 class PokemonList extends StatefulWidget {
@@ -62,6 +63,11 @@ class _PokemonListState extends State<PokemonList> {
                 onTap: () {
                   // Add navigation to the Pokemon details screen or any other action
                   // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => PokemonDetailsScreen(pokemon: pokemon)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              PokemonDetailsScreen(pokemon: pokemon)));
                 },
               );
             },
