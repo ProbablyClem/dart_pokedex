@@ -8,7 +8,6 @@ class ApiService {
   final cache = DefaultCacheManager();
 
   List<Pokemon> pokemonList = [];
-  Map<int, PokemonDetails> pokemonDetails = {};
   final String baseUrl = 'https://pokeapi.co/api/v2';
 
   Future<List<Pokemon>> fetchPokemonList() async {
@@ -47,21 +46,16 @@ class ApiService {
   }
 
   Future<PokemonDetails> getPokemonDetails(int id) async {
-    if (pokemonDetails.containsKey(id)) {
-      return pokemonDetails[id]!;
-    }
-
-    final cacheKey = '$id.details.json';
-    final file = await cache.getSingleFile(cacheKey);
-    if (file.existsSync()) {
-      final jsonData = await file.readAsString();
-      pokemonDetails[id] = PokemonDetails.fromJson(jsonDecode(jsonData));
-    } else {
-      pokemonDetails[id] = await fetchPokemonDetails(id);
-      await cache.putFile(
-          cacheKey, utf8.encode(jsonEncode(pokemonDetails[id])));
-    }
-    return pokemonDetails[id]!;
+    // final cacheKey = 'details_$id.json';
+    // final file = await cache.getSingleFile(cacheKey);
+    // if (file.existsSync()) {
+    // final jsonData = await file.readAsString();
+    // pokemonDetails[id] = PokemonDetails.fromJson(jsonDecode(jsonData));
+    // } else {
+    return await fetchPokemonDetails(id);
+    // await cache.putFile(
+    // cacheKey, utf8.encode(jsonEncode(pokemonDetails[id])));
+    // }
   }
 }
 

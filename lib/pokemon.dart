@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:pokedex/api_service.dart';
 
 class Pokemon {
@@ -29,9 +31,11 @@ class Pokemon {
 }
 
 class PokemonDetails {
-  PokemonDetails();
+  final String height;
+  PokemonDetails({required this.height});
 
   factory PokemonDetails.fromJson(Map<String, dynamic> json) {
-    return PokemonDetails();
+    final height = json['height'].toString();
+    return PokemonDetails(height: height);
   }
 }
