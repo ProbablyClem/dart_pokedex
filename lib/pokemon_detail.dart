@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/api_service.dart';
 import 'package:pokedex/pokemon.dart';
+import 'package:pokedex/pokemon_types.dart';
 
 class PokemonDetailsScreen extends StatefulWidget {
   final Pokemon pokemon;
@@ -58,6 +59,7 @@ class PokemonDetailsState extends State<PokemonDetailsScreen> {
                 'Height: ${details?.height}',
                 style: Theme.of(context).textTheme.headline6,
               ),
+              PokemonTypes(types: details!.types.map((e) => e.name).toList()),
             ],
           ],
         ),
