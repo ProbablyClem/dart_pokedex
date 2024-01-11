@@ -5,7 +5,7 @@ import 'pokemon.dart';
 class PokemonList extends StatefulWidget {
   final List<Pokemon> pokemonList;
 
-  PokemonList({required this.pokemonList});
+  const PokemonList({super.key, required this.pokemonList});
 
   @override
   _PokemonListState createState() => _PokemonListState();
