@@ -4,10 +4,12 @@ import 'package:pokedex/pokemon_list.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,13 +17,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PokedexScreen(),
-      debugShowCheckedModeBanner: false,
+      home: const PokedexScreen(),
     );
   }
 }
 
 class PokedexScreen extends StatefulWidget {
+  const PokedexScreen({super.key});
+
   @override
   _PokedexScreenState createState() => _PokedexScreenState();
 }
@@ -40,13 +43,13 @@ class _PokedexScreenState extends State<PokedexScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pokedex App'),
+        title: const Text('Pokedex App'),
       ),
       body: FutureBuilder<List<Pokemon>>(
         future: _pokemonList,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {

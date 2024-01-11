@@ -1,3 +1,14 @@
 build/*
 .dart_tool/*
 .flutter-plugins-dependencies
+.flutter-plugins
+.flutter-plugins-dependencies
+.dart_tool/package_config_subset
+.dart_tool/package_config.json
+.dart_tool/version
+ios/Podfile
+ios/Flutter/Debug.xcconfig
+ios/Flutter/Release.xcconfig
+macos/Podfile
+macos/Flutter/Flutter-Debug.xcconfig
+macos/Flutter/Flutter-Release.xcconfig
