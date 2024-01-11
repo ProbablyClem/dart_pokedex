@@ -6,9 +6,9 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class ApiService {
   final cache = DefaultCacheManager();
-  final cacheKey = 'api_response.json';
-  List<Pokemon> pokemonList = [];
 
+  List<Pokemon> pokemonList = [];
+  Map<int, PokemonDetails> pokemonDetails = {};
   final String baseUrl = 'https://pokeapi.co/api/v2';
 
   Future<List<Pokemon>> fetchPokemonList() async {
@@ -25,7 +25,7 @@ class ApiService {
     if (pokemonList.isNotEmpty) {
       return pokemonList;
     }
-
+    const cacheKey = 'api_response.json';
     final file = await cache.getSingleFile(cacheKey);
     if (file.existsSync()) {
       final jsonData = await file.readAsString();
@@ -35,6 +35,33 @@ class ApiService {
       await cache.putFile(cacheKey, utf8.encode(jsonEncode(pokemonList)));
     }
     return pokemonList;
+  }
+
+  Future<PokemonDetails> fetchPokemonDetails(int id) async {
+    final response = await http.get(Uri.parse('$baseUrl/pokemon/$id'));
+    if (response.statusCode == 200) {
+      return PokemonDetails.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load Pokemon details');
+    }
+  }
+
+  Future<PokemonDetails> getPokemonDetails(int id) async {
+    if (pokemonDetails.containsKey(id)) {
+      return pokemonDetails[id]!;
+    }
+
+    final cacheKey = '$id.details.json';
+    final file = await cache.getSingleFile(cacheKey);
+    if (file.existsSync()) {
+      final jsonData = await file.readAsString();
+      pokemonDetails[id] = PokemonDetails.fromJson(jsonDecode(jsonData));
+    } else {
+      pokemonDetails[id] = await fetchPokemonDetails(id);
+      await cache.putFile(
+          cacheKey, utf8.encode(jsonEncode(pokemonDetails[id])));
+    }
+    return pokemonDetails[id]!;
   }
 }
 

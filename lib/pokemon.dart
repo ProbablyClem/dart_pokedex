@@ -1,3 +1,5 @@
+import 'package:pokedex/api_service.dart';
+
 class Pokemon {
   final int id;
   final String name;
@@ -17,5 +19,13 @@ class Pokemon {
       imageUrl:
           'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png',
     );
+  }
+}
+
+class PokemonDetails {
+  PokemonDetails();
+
+  factory PokemonDetails.fromJson(Map<String, dynamic> json) {
+    return PokemonDetails();
   }
 }
