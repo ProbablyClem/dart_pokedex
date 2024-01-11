@@ -27,7 +27,7 @@ class ApiService {
     }
 
     final file = await cache.getSingleFile(cacheKey);
-    if (file != null && file.existsSync()) {
+    if (file.existsSync()) {
       final jsonData = await file.readAsString();
       pokemonList = decode(jsonData);
     } else {
