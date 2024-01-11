@@ -4,6 +4,7 @@ class Pokemon {
   final int id;
   final String name;
   final String imageUrl;
+  PokemonDetails? _details;
 
   Pokemon({
     required this.id,
@@ -19,6 +20,11 @@ class Pokemon {
       imageUrl:
           'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png',
     );
+  }
+
+  Future<PokemonDetails> getDetails() async {
+    _details ??= await ApiService().getPokemonDetails(id);
+    return Future(() => _details!);
   }
 }
 
