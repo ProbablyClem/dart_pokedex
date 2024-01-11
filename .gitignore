@@ -14,3 +14,4 @@ macos/Flutter/Flutter-Debug.xcconfig
 macos/Flutter/Flutter-Release.xcconfig
 macos/.DS_Store
 macos/Podfile.lock
+macos/Runner.xcworkspace/contents.xcworkspacedata
