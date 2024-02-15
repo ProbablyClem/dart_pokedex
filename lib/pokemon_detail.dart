@@ -172,7 +172,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.fromLTRB(0, 16.0, 0, 0),
             child: Text(
               widget.pokemon.name.toUpperCase(),
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -180,6 +180,13 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                     color: getTypeColor(details!.types.first.name),
                   ),
             ),
+          ),
+          Text(
+            "#" + widget.pokemon.id.toString(),
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                ),
           ),
           if (details != null && details!.types.isNotEmpty)
             Padding(
