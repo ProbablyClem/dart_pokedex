@@ -1,10 +1,10 @@
-import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/api_service.dart';
 import 'package:pokedex/pokemon.dart';
 import 'dart:math' as math;
 import 'package:pokedex/pokemon_types.dart';
+import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 
 // Custom Pokeball Loader Widget
 class PokeballLoader extends StatefulWidget {
@@ -56,66 +56,67 @@ class PokeballWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 60,
-      height: 60,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.black, width: 3),
-      ),
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              width: 60,
-              height: 30,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
-                border: Border.all(color: Colors.black, width: 3),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 29,
-            left: 0,
-            right: 0,
-            child: Container(
-              width: 60,
-              height: 2,
-              color: Colors.black,
-            ),
-          ),
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.center,
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.black, width: 3),
+        ),
+        child: Stack(
+          children: <Widget>[
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
               child: Container(
-                width: 12,
-                height: 12,
+                width: 60,
+                height: 30,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
+                  color: Colors.red,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
                   border: Border.all(color: Colors.black, width: 3),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
+            Positioned(
+              top: 29,
+              left: 0,
+              right: 0,
+              child: Container(
+                width: 60,
+                height: 2,
+                color: Colors.black,
+              ),
+            ),
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.center,
+                child: Container(
+                  width: 12,
+                  height: 12,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.black, width: 3),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }
 
 class PokemonDetailsScreen extends StatefulWidget {
   final Pokemon pokemon;
+  final List<Pokemon> pokemonList;
 
-  const PokemonDetailsScreen({Key? key, required this.pokemon})
+  const PokemonDetailsScreen(
+      {Key? key, required this.pokemon, required this.pokemonList})
       : super(key: key);
 
   @override
@@ -159,9 +160,12 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       ),
       body: isLoading
           ? const PokeballLoader()
-          : details == null
-              ? const Center(child: Text('Failed to load Pokémon details.'))
-              : buildPokemonDetails(context, imageWidth, imageHeight),
+          : SwipeDetector(
+              onSwipeLeft: (offset) => onSwipeLeft(offset),
+              onSwipeRight: (offset) => onSwipeRight(offset),
+              child: details == null
+                  ? const Center(child: Text('Failed to load Pokémon details.'))
+                  : buildPokemonDetails(context, imageWidth, imageHeight)),
     );
   }
 
@@ -323,5 +327,28 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       default:
         return Colors.grey;
     }
+  }
+
+  void onSwipeLeft(Offset offset) {
+    if (widget.pokemon.id == 1) {
+      return;
+    }
+    Pokemon nextPokemon = super.widget.pokemonList[super.widget.pokemon.id - 2];
+    navigateToPokemon(nextPokemon, context);
+  }
+
+  void onSwipeRight(Offset offset) {
+    Pokemon nextPokemon = super.widget.pokemonList[super.widget.pokemon.id];
+    navigateToPokemon(nextPokemon, context);
+  }
+
+  void navigateToPokemon(Pokemon pokemon, BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PokemonDetailsScreen(
+                  pokemon: pokemon,
+                  pokemonList: super.widget.pokemonList,
+                )));
   }
 }

@@ -66,8 +66,10 @@ class _PokemonListState extends State<PokemonList> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              PokemonDetailsScreen(pokemon: pokemon)));
+                          builder: (context) => PokemonDetailsScreen(
+                                pokemon: pokemon,
+                                pokemonList: super.widget.pokemonList,
+                              )));
                 },
               );
             },
