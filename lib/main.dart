@@ -13,11 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Pokedex App',
+      title: "Pokedex App",
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: const PokedexScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -42,22 +43,21 @@ class _PokedexScreenState extends State<PokedexScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pokedex App'),
-      ),
-      body: FutureBuilder<List<Pokemon>>(
-        future: _pokemonList,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            final List<Pokemon> pokemonList = snapshot.data!;
-            return PokemonList(pokemonList: pokemonList);
-          }
-        },
-      ),
+      body: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: FutureBuilder<List<Pokemon>>(
+            future: _pokemonList,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                final List<Pokemon> pokemonList = snapshot.data!;
+                return PokemonList(pokemonList: pokemonList);
+              }
+            },
+          )),
     );
   }
 }

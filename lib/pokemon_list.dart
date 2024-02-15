@@ -47,9 +47,19 @@ class _PokemonListState extends State<PokemonList> {
       children: [
         TextField(
           onChanged: _filterPokemonList,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
+            constraints: const BoxConstraints(maxWidth: 250),
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(200),
+            ),
             labelText: 'Search Pokémon',
-            prefixIcon: Icon(Icons.search),
+            prefixIcon: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  'images/pokeball.png',
+                  width: 32,
+                )),
           ),
         ),
         Expanded(
