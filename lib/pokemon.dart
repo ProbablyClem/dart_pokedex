@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
 import 'package:pokedex/api_service.dart';
 
 class Pokemon {
@@ -33,14 +34,18 @@ class Pokemon {
 class PokemonDetails {
   final String height;
   final List<Type> types;
-  PokemonDetails({required this.height, required this.types});
+  final List<Stat> stats;
+  PokemonDetails(
+      {required this.height, required this.types, required this.stats});
 
   factory PokemonDetails.fromJson(Map<String, dynamic> json) {
     final height = json['height'].toString();
     final types =
         json['types'].map<Type>((type) => Type.fromJson(type['type'])).toList();
+    final stats =
+        json['stats'].map<Stat>((stat) => Stat.fromJson(stat)).toList();
 
-    return PokemonDetails(height: height, types: types);
+    return PokemonDetails(height: height, types: types, stats: stats);
   }
 }
 
@@ -52,5 +57,16 @@ class Type {
 
   factory Type.fromJson(Map<String, dynamic> json) {
     return Type(name: json['name'], url: json['url']);
+  }
+}
+
+class Stat {
+  final String name;
+  final int value;
+
+  Stat({required this.name, required this.value});
+
+  factory Stat.fromJson(Map<String, dynamic> json) {
+    return Stat(name: json['stat']['name'], value: json['base_stat']);
   }
 }

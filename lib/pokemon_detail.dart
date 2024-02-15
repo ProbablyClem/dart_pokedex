@@ -169,7 +169,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       BuildContext context, double imageSize, double imageHeight) {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Hero(
             tag: 'pokemon-${widget.pokemon.id}',
@@ -200,6 +200,35 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: PokemonTypes(
                   types: details!.types.map((e) => e.name).toList()),
+            ),
+          if (details != null && details!.stats.isNotEmpty)
+            Column(
+              children: details!.stats
+                  .map((stat) => Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4.0, horizontal: 16.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                stat.name.toUpperCase(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: LinearProgressIndicator(
+                                value: stat.value / 100,
+                                backgroundColor: Colors.grey[300],
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    getTypeColor(details!.types.first.name)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ))
+                  .toList(),
             ),
         ],
       ),
