@@ -129,7 +129,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), fetchDetails);
+    fetchDetails();
   }
 
   void fetchDetails() async {
