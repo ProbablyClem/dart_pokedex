@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pokedex/api_service.dart';
 import 'package:pokedex/pokemon.dart';
 import 'dart:math' as math;
@@ -334,21 +336,57 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       return;
     }
     Pokemon nextPokemon = super.widget.pokemonList[super.widget.pokemon.id - 2];
-    navigateToPokemon(nextPokemon, context);
+    Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation) {
+            return PokemonDetailsScreen(
+                pokemon: nextPokemon, pokemonList: super.widget.pokemonList);
+          },
+          transitionsBuilder: (BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+              Widget child) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(-1.0, 0.0),
+                end: const Offset(0.0, 0.0),
+              ).animate(CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeInOut,
+              )),
+              child: child,
+            );
+          },
+        ));
   }
 
   void onSwipeRight(Offset offset) {
     Pokemon nextPokemon = super.widget.pokemonList[super.widget.pokemon.id];
-    navigateToPokemon(nextPokemon, context);
-  }
-
-  void navigateToPokemon(Pokemon pokemon, BuildContext context) {
     Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-            builder: (context) => PokemonDetailsScreen(
-                  pokemon: pokemon,
-                  pokemonList: super.widget.pokemonList,
-                )));
+        PageRouteBuilder(
+          pageBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation) {
+            return PokemonDetailsScreen(
+                pokemon: nextPokemon, pokemonList: super.widget.pokemonList);
+          },
+          transitionsBuilder: (BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+              Widget child) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1.0, 0.0),
+                end: const Offset(0.0, 0.0),
+              ).animate(CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeInOut,
+              )),
+              child: child,
+            );
+          },
+        ));
   }
 }
