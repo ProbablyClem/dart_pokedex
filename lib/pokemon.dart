@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
+import 'package:pokedex/api_service.dart';
 
 class Pokemon {
   final int id;
