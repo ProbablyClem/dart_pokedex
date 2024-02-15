@@ -171,16 +171,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Hero(
-            tag: 'pokemon-${widget.pokemon.id}',
-            child: CachedNetworkImage(
-              imageUrl: widget.pokemon.imageUrl,
-              height: imageHeight,
-              width: imageSize,
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
@@ -191,47 +181,97 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                   ),
             ),
           ),
-          Text(
-            'Height: ${details?.height ?? 'Unknown'}',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
           if (details != null && details!.types.isNotEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: PokemonTypes(
                   types: details!.types.map((e) => e.name).toList()),
             ),
+          Hero(
+            tag: 'pokemon-${widget.pokemon.id}',
+            child: CachedNetworkImage(
+              imageUrl: widget.pokemon.imageUrl,
+              height: 128,
+              width: 128,
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
+          ),
+          //Abilities unordered list
+          if (details != null && details!.abilities.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Column(
+                children: [
+                  Text(
+                    'Abilities',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Column(
+                    children: details!.abilities
+                        .map((ability) => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 4.0, horizontal: 16.0),
+                              child: Text(ability.name,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(fontStyle: FontStyle.italic)
+                                  //italic
+                                  ),
+                            ))
+                        .toList(),
+                  ),
+                ],
+              ),
+            ),
           if (details != null && details!.stats.isNotEmpty)
-            Column(
-              children: details!.stats
-                  .map((stat) => Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 4.0, horizontal: 16.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Text(
-                                stat.name.toUpperCase(),
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: LinearProgressIndicator(
-                                value: stat.value / 100,
-                                backgroundColor: Colors.grey[300],
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    getTypeColor(details!.types.first.name)),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ))
-                  .toList(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Column(
+                children: [
+                  Text(
+                    'Stats',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  buildStats(context),
+                ],
+              ),
             ),
         ],
       ),
+    );
+  }
+
+  //buildStats
+  Widget buildStats(BuildContext context) {
+    return Column(
+      children: details!.stats
+          .map((stat) => Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        stat.name,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: LinearProgressIndicator(
+                        value: stat.value / 100,
+                        backgroundColor: Colors.grey[300],
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            getTypeColor(details!.types.first.name)),
+                      ),
+                    ),
+                  ],
+                ),
+              ))
+          .toList(),
     );
   }
 

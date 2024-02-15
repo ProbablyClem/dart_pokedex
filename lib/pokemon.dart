@@ -35,8 +35,12 @@ class PokemonDetails {
   final String height;
   final List<Type> types;
   final List<Stat> stats;
+  final List<Ability> abilities;
   PokemonDetails(
-      {required this.height, required this.types, required this.stats});
+      {required this.height,
+      required this.types,
+      required this.stats,
+      required this.abilities});
 
   factory PokemonDetails.fromJson(Map<String, dynamic> json) {
     final height = json['height'].toString();
@@ -45,7 +49,12 @@ class PokemonDetails {
     final stats =
         json['stats'].map<Stat>((stat) => Stat.fromJson(stat)).toList();
 
-    return PokemonDetails(height: height, types: types, stats: stats);
+    final abilities = json['abilities']
+        .map<Ability>((ability) => Ability.fromJson(ability['ability']))
+        .toList();
+
+    return PokemonDetails(
+        height: height, types: types, stats: stats, abilities: abilities);
   }
 }
 
@@ -68,5 +77,16 @@ class Stat {
 
   factory Stat.fromJson(Map<String, dynamic> json) {
     return Stat(name: json['stat']['name'], value: json['base_stat']);
+  }
+}
+
+class Ability {
+  final String name;
+  final String url;
+
+  Ability({required this.name, required this.url});
+
+  factory Ability.fromJson(Map<String, dynamic> json) {
+    return Ability(name: json['name'], url: json['url']);
   }
 }
