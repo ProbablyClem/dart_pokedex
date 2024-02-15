@@ -343,7 +343,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   }
 
   void navigateToPokemon(Pokemon pokemon, BuildContext context) {
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => PokemonDetailsScreen(
