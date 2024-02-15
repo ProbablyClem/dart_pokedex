@@ -70,6 +70,7 @@ class _PokemonListState extends State<PokemonList> {
               return ListTile(
                 title: Text(pokemon.name),
                 leading: getImage(pokemon),
+                trailing: Text("#${pokemon.id.toString()}"),
                 onTap: () {
                   // Add navigation to the Pokemon details screen or any other action
                   // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => PokemonDetailsScreen(pokemon: pokemon)));

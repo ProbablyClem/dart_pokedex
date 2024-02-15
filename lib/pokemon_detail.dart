@@ -186,7 +186,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
             ),
           ),
           Text(
-            "#" + widget.pokemon.id.toString(),
+            "#${widget.pokemon.id}",
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.grey,
