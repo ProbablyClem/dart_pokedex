@@ -43,6 +43,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(222, 21, 55, 1),
       body: Padding(
           padding: const EdgeInsets.only(top: 10),
           child: FutureBuilder<List<Pokemon>>(

@@ -173,7 +173,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   Widget buildPokemonDetails(
       BuildContext context, double imageSize, double imageHeight) {
-    return Center(
+    return SingleChildScrollView(
+        child: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -253,7 +254,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
             ),
         ],
       ),
-    );
+    ));
   }
 
   //buildStats

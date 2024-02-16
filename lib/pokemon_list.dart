@@ -46,14 +46,21 @@ class _PokemonListState extends State<PokemonList> {
     return Column(
       children: [
         TextField(
+          cursorColor: Colors.white,
           onChanged: _filterPokemonList,
           decoration: InputDecoration(
             constraints: const BoxConstraints(maxWidth: 250),
             floatingLabelBehavior: FloatingLabelBehavior.never,
-            border: OutlineInputBorder(
+            focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(200),
+              borderSide: const BorderSide(color: Colors.white),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(200),
+              borderSide: const BorderSide(color: Colors.white),
             ),
             labelText: 'Search Pokémon',
+            labelStyle: const TextStyle(color: Colors.white),
             prefixIcon: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset(
@@ -72,8 +79,6 @@ class _PokemonListState extends State<PokemonList> {
                 leading: getImage(pokemon),
                 trailing: Text("#${pokemon.id.toString()}"),
                 onTap: () {
-                  // Add navigation to the Pokemon details screen or any other action
-                  // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => PokemonDetailsScreen(pokemon: pokemon)));
                   Navigator.push(
                       context,
                       MaterialPageRoute(
