@@ -1,16 +1,14 @@
-# pokedex
+# Pokedex
+Implement a Pokedex using the PokeAPI.  
+The Pokedex should be able to display a list of Pokemon and their details.   
+The Pokedex should also be able to filter the list of Pokemon by type.
 
-A new Flutter project.
+## Features
+- Display a list of Pokemon
+- Display details of a Pokemon
+- Filter the list of Pokemon by name
+- Cache the list of Pokemon
+- Animations
+- Gesture support (swipe to navigate beetwen Pokemons)
+- Charts (Pokemon stats)
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
